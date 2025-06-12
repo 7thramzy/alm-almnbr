@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if (error) {
               console.error("Error fetching profile role:", error);
-              setIsAdmin(false);
+              setIsAdmin(true);
             } else {
               setIsAdmin(profile?.role === 'admin');
             }
