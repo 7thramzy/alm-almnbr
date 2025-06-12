@@ -60,6 +60,15 @@ export const Hero = () => {
         </div>
       ) : (
         <div className="absolute top-6 left-6 z-20">
+           <div className="absolute top-6 left-6 z-20">
+          <Link to="/admin">
+            <Button
+              variant="outline"
+              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20"
+            >
+              لوحة التحكم
+            </Button>
+          </Link>
           <Button
             variant="outline"
             onClick={signOut}
