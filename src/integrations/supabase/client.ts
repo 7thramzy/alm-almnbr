@@ -1,3 +1,4 @@
+'use client';
 import { createClient } from '@supabase/supabase-js';
 
 // Fetch URL and Service Key from environment variables
