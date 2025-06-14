@@ -1,24 +1,28 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
+export interface Service {
+  id: string;
+  title_ar: string;
+  title_en: string;
+  description_ar: string;
+  description_en: string;
+  short_description_ar?: string;
+  short_description_en?: string;
+  icon_name: string;
+  image_url?: string;
+  featured: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export const useServices = () => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    // Wait for the session to be ready
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setReady(true);
-      }
-    });
-  }, []);
-
   return useQuery({
     queryKey: ['services'],
-    enabled: ready, // 👈 this prevents the query from running too early
     queryFn: async () => {
+      console.log("Fetching services from Supabase...");
       const { data, error } = await supabase
         .from('services')
         .select('*')
@@ -29,9 +33,10 @@ export const useServices = () => {
         throw error;
       }
 
-      return data;
+      console.log("Fetched services:", data);
+      return data as Service[];
     },
-    staleTime: 1000 * 60,
-    refetchOnWindowFocus: true,
+    staleTime: 1000 * 60, // Cache data for 1 minute
+    refetchOnWindowFocus: true,  // Refetch when tab/window is focused
   });
 };
